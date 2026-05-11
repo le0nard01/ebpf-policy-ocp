@@ -1,4 +1,5 @@
 // Blocks creation of AF_ALG sockets by overriding __sys_socket return value.
+#include <linux/types.h>
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_tracing.h>
 
