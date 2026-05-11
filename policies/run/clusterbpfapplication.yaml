@@ -6,7 +6,10 @@ spec:
   nodeSelector: {}
   byteCode:
     image:
-      url: image-registry.openshift-image-registry.svc:5000/bpfman/ebpf-policy:latest
+      imagePullSecret:
+        namespace: bpfman
+        name: openshift-registry
+      url: 'default-route-openshift-image-registry.apps.ocp.s7cld.sandbox2542.opentlc.com/bpfman/ebpf-policy:latest'
       imagePullPolicy: Always
   programs:
     - name: block_af_alg_socket

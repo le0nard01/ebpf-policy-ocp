@@ -17,4 +17,9 @@ ARG TARGET_ARCH=x86
 RUN make -C build build TARGET_ARCH=${TARGET_ARCH}
 
 FROM scratch
+LABEL io.ebpf.program_name="block_af_alg_socket"
+LABEL io.ebpf.section_name="kprobe/security_socket_create"
+LABEL io.ebpf.program_type="kprobe"
+LABEL io.ebpf.filename="program.bpf.o"
+LABEL io.ebpf.bpf_function_name="block_af_alg_socket"
 COPY --from=builder /output/program.bpf.o /program.bpf.o
