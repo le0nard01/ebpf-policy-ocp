@@ -1,0 +1,25 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: ebpf-policy
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: ebpf-policy-build
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/le0nard01/ebpf-policy-ocp.git
+    contextDir: policies/
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: build/Containerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: ebpf-policy:latest
+  triggers:
+    - type: ConfigChange

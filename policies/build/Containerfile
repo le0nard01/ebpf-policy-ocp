@@ -1,0 +1,14 @@
+FROM registry.access.redhat.com/ubi9/ubi:latest AS builder
+
+RUN dnf install -y clang llvm make kernel-headers libbpf-devel elfutils-libelf-devel && \
+    dnf clean all
+
+WORKDIR /src
+COPY code ./code
+COPY build ./build
+
+ARG TARGET_ARCH=x86
+RUN make -C build build TARGET_ARCH=${TARGET_ARCH}
+
+FROM scratch
+COPY --from=builder /output/program.bpf.o /program.bpf.o
