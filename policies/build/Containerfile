@@ -1,6 +1,6 @@
-FROM registry.access.redhat.com/ubi9/ubi:latest AS builder
+FROM registry.fedoraproject.org/fedora:latest AS builder
 
-RUN dnf install -y --enablerepo=codeready-builder-for-rhel-9-x86_64-rpms \
+RUN dnf install -y \
         clang \
         llvm \
         make \
