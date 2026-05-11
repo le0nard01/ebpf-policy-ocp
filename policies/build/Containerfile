@@ -1,6 +1,12 @@
 FROM registry.access.redhat.com/ubi9/ubi:latest AS builder
 
-RUN dnf install -y clang llvm make kernel-headers libbpf-devel elfutils-libelf-devel && \
+RUN dnf install -y --enablerepo=codeready-builder-for-rhel-9-x86_64-rpms \
+        clang \
+        llvm \
+        make \
+        kernel-headers \
+        elfutils-libelf-devel \
+        libbpf-devel && \
     dnf clean all
 
 WORKDIR /src
