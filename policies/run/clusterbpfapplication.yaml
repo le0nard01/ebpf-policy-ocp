@@ -1,0 +1,17 @@
+apiVersion: bpfman.io/v1alpha1
+kind: ClusterBpfApplication
+metadata:
+  name: policies
+spec:
+  nodeSelector: {}
+  byteCode:
+    image:
+      url: image-registry.openshift-image-registry.svc:5000/bpfman/ebpf-policy:latest
+      imagePullPolicy: Always
+  programs:
+    - name: block_af_alg_socket
+      type: KProbe
+      kprobe:
+        links:
+          - function: security_socket_create
+            offset: 0
