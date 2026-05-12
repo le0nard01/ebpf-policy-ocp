@@ -44,7 +44,7 @@ spec:
           image: 'image-registry.openshift-image-registry.svc:5000/ebpf-exporter/ebpf-exporter:latest'
           args:
             - '--config.dir'
-            - /rules
+            - /examples
             - '--web.listen-address'
             - '0.0.0.0:9435'
             - '--config.names'

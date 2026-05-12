@@ -24,10 +24,10 @@ RUN set -eux; \
     find /rules -maxdepth 1 -type f -name '*.bpf.c' -exec cp {} /build/ebpf_exporter/examples/ \; ; \
     ls /build/ebpf_exporter/examples/*.bpf.c; \
     make -C /build/ebpf_exporter/examples clean build CC=clang BUILD_LIBBPF=0; \
-    mkdir -p /rules-output; \
-    cp /build/ebpf_exporter/examples/*.yaml /rules-output/; \
-    cp /build/ebpf_exporter/examples/*.bpf.o /rules-output/
+    mkdir -p /examples-output; \
+    cp /build/ebpf_exporter/examples/*.yaml /examples-output/; \
+    cp /build/ebpf_exporter/examples/*.bpf.o /examples-output/
 
 FROM ghcr.io/cloudflare/ebpf_exporter:latest
 
-COPY --from=builder /rules-output /rules
+COPY --from=builder /examples-output/ /examples/
