@@ -1,0 +1,9 @@
+metrics:
+  counters:
+    - name: dirty_frag_surface_events_total
+      help: Sensitive socket creation events touching Dirty Frag affected kernel surfaces
+      labels:
+        - name: surface
+          size: 8
+          decoders:
+            - name: uint
