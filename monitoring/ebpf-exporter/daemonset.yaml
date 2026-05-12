@@ -22,17 +22,6 @@ spec:
     spec:
       restartPolicy: Always
       serviceAccountName: ebpf-exporter
-      initContainers:
-        - name: git-sync
-          image: registry.access.redhat.com/ubi9/git
-          command:
-            - /bin/sh
-            - -c
-            - |
-              git clone https://github.com/seu/repo.git /config
-          volumeMounts:
-            - name: config
-              mountPath: /config
       containers:
         - resources: {}
           terminationMessagePath: /dev/termination-log
@@ -51,8 +40,6 @@ spec:
               mountPath: /sys/kernel/debug
             - name: modules
               mountPath: /lib/modules/
-            - name: config
-              mountPath: /config
           terminationMessagePolicy: File
           image: 'ghcr.io/cloudflare/ebpf_exporter:latest'
           args:
@@ -65,8 +52,6 @@ spec:
       automountServiceAccountToken: false
       serviceAccount: ebpf-exporter
       volumes:
-        - name: config
-          emptyDir: {}
         - name: kernel
           hostPath:
             path: /sys/kernel/debug
