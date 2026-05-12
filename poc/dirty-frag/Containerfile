@@ -13,4 +13,4 @@ COPY exp.c .
 
 RUN gcc -O2 -Wall -Wextra -o dirty-frag-trigger exp.c
 
-ENTRYPOINT ["/src/dirty-frag-trigger"]
+ENTRYPOINT [""]
