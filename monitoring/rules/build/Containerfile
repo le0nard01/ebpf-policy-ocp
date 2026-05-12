@@ -7,6 +7,7 @@ RUN dnf install -y \
         git \
         elfutils-libelf-devel \
         kernel-headers \
+        libbpf-devel \
         make \
         pkg-config \
         zlib-devel && \
@@ -22,7 +23,7 @@ RUN set -eux; \
     find /rules -maxdepth 1 -type f -name '*.yaml' -exec cp {} /build/ebpf_exporter/examples/ \; ; \
     find /rules -maxdepth 1 -type f -name '*.bpf.c' -exec cp {} /build/ebpf_exporter/examples/ \; ; \
     ls /build/ebpf_exporter/examples/*.bpf.c; \
-    make -C /build/ebpf_exporter/examples clean build CC=clang
+    make -C /build/ebpf_exporter/examples clean build CC=clang BUILD_LIBBPF=0
 
 FROM ghcr.io/cloudflare/ebpf_exporter:latest
 
