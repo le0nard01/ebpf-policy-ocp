@@ -41,14 +41,14 @@ spec:
             - name: modules
               mountPath: /lib/modules/
           terminationMessagePolicy: File
-          image: 'ghcr.io/cloudflare/ebpf_exporter:latest'
+          image: 'image-registry.openshift-image-registry.svc:5000/ebpf-exporter/ebpf-exporter:latest'
           args:
             - '--config.dir'
-            - /examples/
+            - /rules
             - '--web.listen-address'
             - '0.0.0.0:9435'
             - '--config.names'
-            - 'timers,uprobe,usdt,shrinklat,biolatency,accept-latency,bpf-jit,cachestat,cgroup,llcstat,raw-tracepoints,tcp-syn-backlog,tcp-window-clamps'
+            - accept-latency
       automountServiceAccountToken: false
       serviceAccount: ebpf-exporter
       volumes:
