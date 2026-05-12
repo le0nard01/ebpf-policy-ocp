@@ -27,5 +27,5 @@ RUN set -eux; \
 
 FROM ghcr.io/cloudflare/ebpf_exporter:latest
 
-COPY --from=builder /build/ebpf_exporter/examples/*.yaml /examples/
-COPY --from=builder /build/ebpf_exporter/examples/*.bpf.o /examples/
+COPY --from=builder /build/ebpf_exporter/examples/*.yaml /rules/
+COPY --from=builder /build/ebpf_exporter/examples/*.bpf.o /rules/
