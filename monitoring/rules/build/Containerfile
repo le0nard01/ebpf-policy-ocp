@@ -1,0 +1,30 @@
+FROM registry.fedoraproject.org/fedora:latest AS builder
+
+RUN dnf install -y \
+        ca-certificates \
+        clang \
+        gcc \
+        git \
+        elfutils-libelf-devel \
+        kernel-headers \
+        make \
+        pkg-config \
+        zlib-devel && \
+    dnf clean all
+
+WORKDIR /build
+RUN git clone --depth 1 https://github.com/cloudflare/ebpf_exporter.git /build/ebpf_exporter
+
+COPY . /rules
+
+RUN set -eux; \
+    find /build/ebpf_exporter/examples -maxdepth 1 -type f \( -name '*.bpf.c' -o -name '*.yaml' \) -delete; \
+    find /rules -maxdepth 1 -type f -name '*.yaml' -exec cp {} /build/ebpf_exporter/examples/ \; ; \
+    find /rules -maxdepth 1 -type f -name '*.bpf.c' -exec cp {} /build/ebpf_exporter/examples/ \; ; \
+    ls /build/ebpf_exporter/examples/*.bpf.c; \
+    make -C /build/ebpf_exporter/examples clean build CC=clang
+
+FROM ghcr.io/cloudflare/ebpf_exporter:latest
+
+COPY --from=builder /build/ebpf_exporter/examples/*.yaml /examples/
+COPY --from=builder /build/ebpf_exporter/examples/*.bpf.o /examples/

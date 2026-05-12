@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ebpf-exporter
+  namespace: ebpf-exporter
+  labels:
+    app.kubernetes.io/instance: ebpf-exporter
+    app.kubernetes.io/name: ebpf-exporter
+spec:
+  clusterIP: 172.30.96.248
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: metrics
+      protocol: TCP
+      port: 80
+      targetPort: metrics
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.96.248
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app.kubernetes.io/instance: ebpf-exporter
+    app.kubernetes.io/name: ebpf-exporter
